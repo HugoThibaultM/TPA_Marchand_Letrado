@@ -1,65 +1,43 @@
 package Vehiculos;
 /**
- *La clase Coche representa un tipo de vehiculo que puede cambiar de carril aleatoriamente para esquivar obstaculos.
+ * La clase Coche representa un tipo de vehiculo que puede cambiar de carril aleatoriamente.
  */
 public class Coche extends Vehiculo {
     private int carrilActual;
-    private int velocidad;
 
     /**
-     * Es el constructor
+     * Constructor para crear una nueva instancia de Moto.
+     *
+     * @param velocidadInicial La velocidad inicial de la moto.
      */
-    public Coche() {
-        super(10); // Velocidad constante del coche
-        this.carrilActual = 2; // El coche comienza en el carril central.
+    public Coche (int velocidadInicial) {
+        super(velocidadInicial);
+        // Inicialmente, las motos pueden estar en cualquier carril (1, 2 o 3).
+        this.carrilActual = (int) (Math.random() * 4);
     }
 
     /**
-     * Metodo para cambiar al carril izquierdo
+     * Implementación del metodo para que la moto esquive obstaculos cambiando de carril.
      */
-    public void cambiarCarrilIzquierdo() {
-        if (carrilActual > 1) {
-            cambiarDeCarril(carrilActual - 1);
-        }
-    }
-
-    /**
-     * Metodo para cambiar al carril derecho
-     */
-
-    public void cambiarCarrilDerecho() {
-        if (carrilActual < 3) {
-            cambiarDeCarril(carrilActual + 1);
-        }
-    }
-
     @Override
     public void esquivarObstaculo() {
-        // La lógica de esquiva de obstáculos se maneja por el usuario.
-        // El coche no cambia de carril automáticamente.
-    }
-    /**
-     * Metodo para acelerar el vehiculo
-     */
-    public void acelerar() {
-        velocidad += 1;
+        // Los coches cambian aleatoriamente de carril para dificultar el adelantamiento.
+        int nuevoCarril;
+        do {
+            nuevoCarril = (int) (Math.random() * 4) ;
+        } while (nuevoCarril == carrilActual);
+        cambiarDeCarril(nuevoCarril);
     }
 
     /**
-     * Metodo para frenar el vehiculo
-     */
-    public void frenar() {
-        if (velocidad > 0) {
-            velocidad -= 1;
-        }
-    }
-
-    /**
-     * Metodo para cambiar de Carril
-     * @param nuevoCarril el nuevo carril
+     * Cambia el carril actual de la moto a uno especificado.
+     *
+     * @param nuevoCarril El nuevo carril al que se movera la moto.
      */
     public void cambiarDeCarril(int nuevoCarril) {
-        System.out.println("El Coche cambio del carril " + carrilActual + " al carril " + nuevoCarril);
-        carrilActual = nuevoCarril;
+        if (nuevoCarril != carrilActual) {
+            System.out.println("Coche cambio del carril " + carrilActual + " al carril " + nuevoCarril);
+            carrilActual = nuevoCarril;
+        }
     }
 }
